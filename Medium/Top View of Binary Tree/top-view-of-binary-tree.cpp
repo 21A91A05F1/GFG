@@ -109,23 +109,27 @@ class Solution
         queue<pair<Node*,int>>q;
         
         q.push({root,0});
-        
         while(!q.empty())
         {
-            Node* temp=q.front().first;
-            int freq=q.front().second;
-            
+            auto it=q.front();
             q.pop();
-            if(mpp.find(freq)==mpp.end()) 
+            
+            Node* node=it.first;
+            int level=it.second;
+            
+            if(mpp.find(level)==mpp.end())
             {
-                mpp[freq]=temp->data;
+                mpp[level]=node->data;
             }
-            if(temp->left!=NULL) q.push({temp->left,freq-1});
-            if(temp->right!=NULL) q.push({temp->right,freq+1});
+            if(node->left!=NULL) q.push({node->left,level-1});
+            if(node->right!=NULL) q.push({node->right,level+1});
         }
-        vector<int>ve;
-        for(auto it:mpp) ve.push_back(it.second);
-        return ve;
+        vector<int>res;
+        for(auto it:mpp)
+        {
+            res.push_back(it.second);
+        }
+        return res;
     }
 
 };
