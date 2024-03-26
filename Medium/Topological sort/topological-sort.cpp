@@ -7,41 +7,43 @@ class Solution
 {
 	public:
 	//Function to return list containing vertices in Topological order. 
-	void dfs(int Node,vector<int>&vis,stack<int>&st,vector<int> adj[] )
+	vector<int> topoSort(int v, vector<int> adj[]) 
 	{
+	    // code here
+	    //using indegree
 	    
-        vis[0]=1;
-        for(auto it:adj[Node])
-        {
-            if(vis[it]==0)
-            {
-                vis[it]=1;
-                dfs(it,vis,st,adj);
-                
-            }
-        }
-        st.push(Node);
-	}
-	vector<int> topoSort(int V, vector<int> adj[]) 
-	{
-	    //
-	    vector<int>vis(V,0);
-	    stack<int>st;
-	    vector<int>res;
-	    for(int i=0;i<V;i++)
+	    int indegree[v]={0};
+	    for(int i=0;i<v;i++)
 	    {
-	        if(!vis[i])
+	        for(auto it:adj[i])
 	        {
-	            dfs(0,vis,st,adj);
+	            indegree[it]++;
 	        }
 	    }
-	    while(!st.empty())
+	    queue<int>q;
+	    for(int i=0;i<v;i++)
 	    {
-	        res.push_back(st.top());
-	        st.pop();
+	        if(indegree[i]==0)
+	        {
+	            q.push(i);
+	        }
 	    }
-	    return res;
-	    
+	    vector<int>ve;
+	    while(!q.empty())
+	    {
+	        int node=q.front();
+	        q.pop();
+	        
+	        ve.push_back(node);
+	        //node is in toposort , so remove it from indegree 
+	        // since we are reducing the indegree of adjacent elements to the elements in queue.
+	        for(auto it:adj[node])
+	        {
+	            indegree[it]--;
+	            if(indegree[it]==0) q.push(it);
+	        }
+	    }
+	    return ve;
 	}
 };
 
