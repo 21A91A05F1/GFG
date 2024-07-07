@@ -16,7 +16,7 @@ class Solution{
         while(right<n)
         {
             mpp[s[right]]++;
-            while(mpp.size()>k ) 
+            if(mpp.size()>k ) 
             {
                 mpp[s[left]]--;
                 if(mpp[s[left]]==0) mpp.erase(s[left]);
