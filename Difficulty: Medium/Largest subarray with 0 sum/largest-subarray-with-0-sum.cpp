@@ -14,6 +14,7 @@ class Solution {
         // Your code here
         unordered_map<int,int>mpp;
         int s=0,maxi_len=0;
+        mpp[0]=-1;
         for(int i=0;i<n;i++)
         {
             s+=arr[i];
@@ -21,12 +22,12 @@ class Solution {
             {
                 maxi_len=max(maxi_len,i-mpp[s]);
             }
-            if(s==0) maxi_len=max(maxi_len,i+1);
-            if(mpp.find(s)==mpp.end()) mpp[s]=i;
+            else mpp[s]=i;
         }
         return maxi_len;
     }
 };
+
 
 
 //{ Driver Code Starts.
